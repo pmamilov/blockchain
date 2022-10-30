@@ -22,9 +22,10 @@ class Block {
   }
 
   mine(difficulty) {
-    while(!this.hash.startsWith(new Array(this.difficulty+1).join('0'))) {
+    while(!this.hash.startsWith(this.difficulty)) {
       this.nonce++;
       this.hash = this.calculateHash();
+      //console.log('Nonce: ' + this.nonce + ' Hash: ' + this.hash);
     }
   }
 }
@@ -45,6 +46,7 @@ class Blockchain {
   addBlock(newBlock) {
     newBlock.previousHash = this.latestBlock().hash;
     newBlock.index = this.latestBlock().index + 1;
+    //newBlock.difficulty = this.latestBlock().difficulty + 1;
     newBlock.hash = newBlock.calculateHash();
     newBlock.mine(this.difficulty);
     this.chain.push(newBlock);
@@ -72,8 +74,8 @@ function getDate() {
 }
 
 let jsChain = new Blockchain();
-jsChain.addBlock(new Block(getDate(), {amount: 1}));
-jsChain.addBlock(new Block(getDate(), {amount: 2}));
+jsChain.addBlock(new Block(getDate(), {from: 'Ray', to: 'Ann', amount: 20}));
+jsChain.addBlock(new Block(getDate(), {from: 'Gir', to: 'Kop', amount: 80}));
 
 
 console.log(JSON.stringify(jsChain, null, 4));
