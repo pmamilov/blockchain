@@ -46,11 +46,8 @@ class Blockchain {
       const currenBlock = this.chain[i];
       const previosBlock = this.chain[i - 1];
 
-      if(currenBlock.previousHash !== previosBlock.hash) {
-        return false;
-      }
-
-      if(currenBlock.hash !== currenBlock.calculateHash()) {
+      if(currenBlock.previousHash !== previosBlock.hash ||
+         currenBlock.hash !== currenBlock.calculateHash()) {
         return false;
       }
 
